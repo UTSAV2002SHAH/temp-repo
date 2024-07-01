@@ -1,13 +1,28 @@
-const http = require('http')
+const express = require('express')
+const app = express()
+let { people } = require('./data')
+//static Asset
+app.use(express.static('./FormWebSite'))
 
-const server = http.createServer((req,res)=>{
-    res.writeHead(200, {'content-type' : 'text/html '}) // Content type matters (MIME Types MDN)
-    res.write('<h1>HOME PAGE</h1>')
+// parse from data
+app.use(express.urlencoded({extended  : false}))
 
-    // console.log(req.method);
-    //console.log(req.url);
-    
-    res.end()
+app.get('./api/people', (req,res)=>{
+    res.status(200).json({success : true, data : people})
 })
 
-server.listen(5000)
+app.post('/login', (req,res)=>{
+    const {name} = req.body
+
+    if(name){
+        console.log(req.body)
+        return res.status(200).send(`Welcome ${name}!!!`)
+    }
+    res.status(401).send('Credentials Plzzz');
+})
+
+
+
+app.listen(5000, ()=>{
+    console.log('Server listening on port 5000.....')
+})

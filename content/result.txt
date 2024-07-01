@@ -1,2 +1,0 @@
-here is the result of merging two files: this is first text file, this is Second text file
-this should be 2nd line
